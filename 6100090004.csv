@@ -1,0 +1,4 @@
+Item Code,Description,Item Category,Oraganization,Sub Inventory,To Location,To Subinventory,Document Number,Transaction ID,Transaction DATE,Selling  Price,Value of Selling Price,Lot Number,UOM,Transaction Type,Transaction Quantity,Transaction Cost,Transaction Value,Balance Quantity,Balance Value
+6100090004,DICYNONE 125 MG/ML INJ 2ML AMP-4'S,Medicine,Rayan Hospital Clinics,RAY_ER,RYN 11206-E.R. (Emergency Room),,15484507,1121210776,20-01-2024,21.15,-10.58,457356.0,AMP,Move Order Issue,0.5,18.51218,-9.25609,2.5,46.28045
+6100090004,DICYNONE 125 MG/ML INJ 2ML AMP-4'S,Medicine,Rayan Hospital Clinics,RAY_ER,,,,1124447810,26-01-2024,21.15,-42.3,457352.0,AMP,Physical Inv Adjust,2.0,18.51218,-37.02436,0.5,9.25609
+6100090004,DICYNONE 125 MG/ML INJ 2ML AMP-4'S,Medicine,Rayan Hospital Clinics,RAY_ER,RYN 11206-E.R. (Emergency Room),,15903447,1188619632,30-05-2024,21.15,-31.73,457356.0,AMP,Move Order Issue,1.5,18.51195,-27.76792,2.0,37.02389
