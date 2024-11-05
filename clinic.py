@@ -27,19 +27,32 @@ def forecast_prophet(model, period, freq="D"):
   return forecast
 
 def clinic():
-    selected_category = st.sidebar.selectbox("Select an option", list(clinic_record['Description']))
-    selected_item = clinic_record.loc[clinic_record['Description'] == selected_category, 'Item Code'].iloc[0]
-    data = pd.read_csv(f'./{selected_item}.csv')
-    if len(data) > 2:
-        data = preprocessing_for_training(data)
-        model = train_prophet_model(data)
-        period = st.sidebar.selectbox("Select No of days to predict", list(range(1, 16)))
-        forcast = forecast_prophet(model, period)
-        forcast = forcast[['ds', 'yhat']]
-        forcast['yhat'] = np.ceil(forcast['yhat'].abs()).clip(lower=1).astype(int)
-        forcast = forcast.rename(columns={'ds': 'date', 'yhat': 'demand'})
-        st.markdown(f"<h3>{selected_category}</h3>", unsafe_allow_html=True)
-        st.markdown(f"<div style='display: flex; justify-content: center;'>{forcast.tail(period).to_html(index=False)}</div>", unsafe_allow_html=True)
-    else:
-       print("Data contains less than 2 rows.")
+  # Add "None" as the initial selection option
+  options = ["None"] + list(clinic_record['Description'])
+  selected_category = st.sidebar.selectbox("Select an option", options)
+
+  # Proceed only if a category other than "None" is selected
+  if selected_category != "None":
+      selected_item = clinic_record.loc[clinic_record['Description'] == selected_category, 'Item Code'].iloc[0]
+      data = pd.read_csv(f'./{selected_item}.csv')
+      
+      if len(data) > 2:
+          data = preprocessing_for_training(data)
+          model = train_prophet_model(data)
+          
+          period = st.sidebar.selectbox("Select No of days to predict", list(range(1, 16)))
+          forecast = forecast_prophet(model, period)
+          forecast = forecast[['ds', 'yhat']]
+          
+          # Adjust the forecast values
+          forecast['yhat'] = np.ceil(forecast['yhat'].abs()).clip(lower=1).astype(int)
+          forecast = forecast.rename(columns={'ds': 'date', 'yhat': 'demand'})
+          
+          # Display the selected category and forecast data in the app
+          st.markdown(f"<h3>{selected_category}</h3>", unsafe_allow_html=True)
+          st.markdown(f"<div style='display: flex; justify-content: center;'>{forecast.tail(period).to_html(index=False)}</div>", unsafe_allow_html=True)
+      else:
+          st.write("Data contains less than 2 rows.")
+  else:
+      st.write("Please select an item to proceed.")
 
